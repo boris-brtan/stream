@@ -1,7 +1,7 @@
 {
     "name": "Stream",
     "theme_color": "#2d89d2",
-    "background_color": "#438fcb",
+    "background_color": "#000000",
     "display": "minimal-ui",
     "Scope": "/",
     "start_url": "/stream/",
