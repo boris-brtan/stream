@@ -6,16 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="default.css">
+    <link rel="icon" type="image/x-icon" href="images/icons/favicon.ico">
 </head>
 
-<body>
-    <div>
+<body class="menu">
+    <section class="menu">
+        <button class="edit"></button>
+    </section>
+    <section class="content">
         <label>
-            <input id="url" type="url" placeholder="Add audio stream URL">
+            <input id="url" type="url" placeholder="Add audio stream URL" autocomplete="off">
         </label>
         <ul></ul>
         <audio controls></audio>
-    </div>
+    </section>
     <script type="text/javascript" src="default.js"></script>
 </body>
 
