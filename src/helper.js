@@ -19,30 +19,41 @@ export const syncStorage = () => {
 }
 export const refreshStorage = () => {
     streamList.innerHTML = ''
-    localStorage.stream && JSON.parse(localStorage.stream).items?.forEach((item) => streamList.appendChild(createStreamElement(item)))
+    localStorage.stream && JSON.parse(localStorage.stream).items?.forEach((item) => createStreamElement(item, streamList))
 }
 
 export const setActive = (node) => {
-    active()?.classList.remove('active')
-    node.classList.add('active')
+    [active(), node].forEach((elm) => elm?.classList.toggle('active'))
+}
+
+export const createElement = (tag, options = {}, appendToElement = null) => {
+    const element = document.createElement(tag)
+    Object.entries(options).forEach(([key, value]) => {
+        element[key] = value
+    })
+    if (appendToElement) {
+        return appendToElement.appendChild(element)
+    }
+    return element
 }
 
 let selectedStream = null
 const audioElm = document.querySelector('audio')
-export const createStreamElement = (item) => {
-    const streamElm = document.createElement('li')
-    const textElm = document.createElement('span')
-    textElm.textContent = item.title
-    streamElm.appendChild(textElm)
-    const urlElm = document.createElement('span')
-    urlElm.textContent = item.url
-    streamElm.appendChild(urlElm)
-    const renameButton = document.createElement('button')
-    renameButton.classList.add('rename')
+export const createStreamElement = (item, appendToElement = null) => {
+    const streamElm = createElement('li')
+    const textElm = createElement('span', {
+        textContent: item.title,
+    }, streamElm)
+    const urlElm = createElement('span', {
+        textContent: item.url,
+    }, streamElm)
+    const renameButton = createElement('button', {
+        className: 'rename',
+    }, streamElm)
     streamElm.appendChild(renameButton)
-    const removeButton = document.createElement('button')
-    removeButton.classList.add('remove')
-    streamElm.appendChild(removeButton)
+    const removeButton = createElement('button', {
+        className: 'remove',
+    }, streamElm)
     renameButton.addEventListener('click', (evt) => {
         evt.stopImmediatePropagation()
         if (document.body.classList.contains('rename')) {
@@ -51,13 +62,11 @@ export const createStreamElement = (item) => {
             } else {
                 refreshStorage()
             }
-            document.body.classList.remove('rename')
-            streamElm.classList.remove('rename')
-            textElm.contentEditable = urlElm.contentEditable = false
+            [streamElm, document.body].forEach((elm) => elm.classList.remove('rename'))
+            [textElm, urlElm].forEach((elm) => elm.contentEditable = false) 
         } else {
-            document.body.classList.add('rename')
-            streamElm.classList.add('rename')
-            textElm.contentEditable = urlElm.contentEditable = true
+            [streamElm, document.body].forEach((elm) => elm.classList.add('rename'))
+            [textElm, urlElm].forEach((elm) => elm.contentEditable = true)
         }
     })
     removeButton.addEventListener('click', (evt) => {
@@ -84,10 +93,12 @@ export const createStreamElement = (item) => {
             return
         }
         audioElm.src = item.url
-        audioElm.play()
+        audioElm.play().catch((e) => e)
         setActive(streamElm)
-        audioMetadata && (audioMetadata.title = item.url.match(/[^/]+$/))
+        audioMetadata && (audioMetadata.title = item.title.match(/[^/]+$/))
     })
-
+    if(appendToElement) {
+        return appendToElement.appendChild(streamElm)
+    }
     return streamElm
 }
