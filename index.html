@@ -69,7 +69,9 @@
         <audio controls></audio>
     </div>
     <script>
+        let activeStream = null
         const audioElm = document.querySelector('audio')
+        const audioMetadata = navigator.mediaSession && (navigator.mediaSession.metadata = new MediaMetadata())
         const streamInput = document.querySelector('input')
         const streamList = document.querySelector('ul')
 
@@ -77,7 +79,7 @@
             if (evt.keyCode === 13) {
                 const streamElm = createStreamElement(streamInput.value)
                 streamList.appendChild(streamElm)
-                localStorage.streamList = JSON.stringify(Array.prototype.slice.call(streamList.children).map(elm => elm.textContent))
+                localStorage.streamList = JSON.stringify([].slice.call(streamList.children).map(elm => elm.textContent))
                 streamInput.value = ''
             }
         });
@@ -87,16 +89,20 @@
             streamElm.addEventListener('click', (evt) => {
                 audioElm.src = url
                 audioElm.play()
+                activeStream = streamElm
+                if (audioMetadata) {
+                    audioMetadata.title = url.match(/[^/]+$/)
+                    navigator.mediaSession.setActionHandler('nexttrack', () => {
+                        (activeStream.nextElementSibling || activeStream.parentElement.firstElementChild).click()
+                    })
+                }
             })
             streamElm.textContent = url
 
             return streamElm
         }
 
-        localStorage.streamList && JSON.parse(localStorage.streamList).forEach((url) => {
-            const streamElm = createStreamElement(url)
-            streamList.appendChild(streamElm)
-        });
+        localStorage.streamList && JSON.parse(localStorage.streamList).forEach((url) => streamList.appendChild(createStreamElement(url)));
 
         if ("serviceWorker" in navigator) {
             if (navigator.serviceWorker.controller) {
