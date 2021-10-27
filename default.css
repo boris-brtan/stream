@@ -1,0 +1,51 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #000;
+    color: #fff;
+}
+
+label input {
+    outline: none;
+    background: transparent;
+}
+
+label input[type=text],
+label input[type=url] {
+    border: none;
+    border-bottom: 1px dotted #ffffff;
+    width: 100%;
+    max-width: 40ex;
+    font-size: 1.15rem;
+    text-align: center;
+    padding: 7px;
+    color: #fff;
+}
+
+ul {
+    margin: 1rem 0;
+    list-style-type: none;
+}
+
+ul li {
+    font-size: 20px;
+    padding: 1ex 0;
+}
+
+ul li:hover {
+    background: rgba(255, 255, 255, .25);
+    cursor: pointer;
+}
