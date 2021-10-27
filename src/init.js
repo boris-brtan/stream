@@ -3,9 +3,7 @@ import { migrate } from './migration'
 
 migrate()
 
-document.querySelector('button.edit').addEventListener('click', (e) => {
-    document.body.classList.toggle('edit')
-})
+document.querySelector('button.edit').addEventListener('click', (e) => document.body.classList.toggle('edit'))
 
 audioMetadata && navigator.mediaSession.setActionHandler('previoustrack', () => {
     (active().previousElementSibling || active().parentElement.lastElementChild).click()
