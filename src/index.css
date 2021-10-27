@@ -48,6 +48,7 @@ label input[type=url] {
 ul {
     margin: 1rem 0;
     list-style-type: none;
+    min-width: 300px;
 }
 
 ul li {
@@ -57,6 +58,7 @@ ul li {
 ul li span {
     display: block;
     padding: 1ex;
+    text-align: center;
 }
 
 body.edit ul li span {
@@ -73,11 +75,19 @@ ul li button {
     width: 43px;
     height: 43px;
     position: absolute;
-    top: 0;
     background: rgba(255, 0, 0, .66);
     bottom: 0;
     right: -44px;
 }
+
+button.rename {
+    background: rgba(255, 255, 0, .66);
+    top: 0;
+}
+body.rename li.rename button.rename {
+    background: rgba(0, 255, 0, .66);
+}
+
 
 body > section {
     display: flex;
@@ -92,17 +102,17 @@ section.menu {
     transition: max-width .25s linear;
 }
 
-body.menu section.menu {
+.menu section.menu {
     max-width: 50px;
 } 
 
-button.edit {
+section.menu button.edit {
     width: 35px;
     height: 35px;
     padding: 6px;
 }
 
-button.edit:after {
+section.menu button.edit:after {
     content: "";
     display: block;
     height: 100%;
@@ -113,13 +123,21 @@ button.edit:after {
     transform: rotate(-45deg) translate(3px, 4px);
 }
 
-body.edit button.edit:after {
+body.edit .menu button.edit:after {
     background: linear-gradient(0deg, #fff 50%, transparent 50%);
 }
 
+body.edit ul li span:nth-child(n+2),
+body.edit.rename ul li.rename button.rename,
 body.edit ul li button {
-    display: inline-block;
-} 
+    display: block;
+}
+
+body.rename button,
+body.edit.rename button,
+body ul li span:nth-child(n+2) {
+    display: none;
+}
 
 section.content {
     flex: 1;

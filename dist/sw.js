@@ -15,7 +15,7 @@ self.addEventListener("install", function (event) {
 
 // If any fetch fails, it will show the offline page.
 self.addEventListener("fetch", function (event) {
-    if (event.request.method !== "GET" 
+    if (event.request.method !== "GET"
         || ["audio","video"].some((dst) => dst === event.request.destination)
     ) return;
 
