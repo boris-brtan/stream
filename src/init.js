@@ -27,7 +27,7 @@ document.querySelector('input').addEventListener('keyup', (evt) => {
         syncStorage()
         evt.target.value = ''
     }
-});
+})
 
 function handleTouchStart(e) {
     const startX = e.touches && e.touches[0].clientX || e.clientX

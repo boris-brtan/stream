@@ -4,9 +4,9 @@
   "description": "Streaming PWA",
   "private": true,
   "scripts": {
-    "build": "NODE_ENV=production npx webpack build",
-    "clean": "rm -f dist/main.js*",
-    "start": "npm run clean && webpack serve --open --port 9999",
+    "build": "NODE_ENV=production npx esbuild src/index.js --bundle --minify --outfile=dist/main.js",
+    "clean": "rm -f dist/main.*",
+    "start": "npm run clean && npx esbuild src/index.js --bundle --servedir=dist --outfile=dist/main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -25,12 +25,6 @@
     "url": "https://github.com/boris-brtan/stream/issues"
   },
   "homepage": "https://github.com/boris-brtan/stream#readme",
-  "devDependencies": {
-    "css-loader": "^5.2.7",
-    "file-loader": "^6.2.0",
-    "style-loader": "^3.1.0",
-    "webpack": "^5.44.0",
-    "webpack-cli": "^4.7.2",
-    "webpack-dev-server": "^3.11.2"
-  }
+  "devDependencies": {},
+  "dependencies": {}
 }
