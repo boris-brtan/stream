@@ -1,4 +1,3 @@
-
 export const streamList = document.querySelector('ul')
 export const audioMetadata = navigator.mediaSession && (navigator.mediaSession.metadata = new MediaMetadata())
 
@@ -16,7 +15,7 @@ export const syncStorage = () => {
         items: [].slice.call(streamList.children).map(elm => ({
             title: elm.children[0].textContent,
             url: elm.children[1].textContent,
-        }))
+        })),
     })
 }
 export const refreshStorage = () => {
@@ -52,7 +51,7 @@ export const createStreamElement = (item, appendToElement = null) => {
     renameButton.addEventListener('click', (evt) => {
         evt.stopImmediatePropagation()
         if (document.body.classList.contains('rename')) {
-            confirm(`Apply changes ?`) && syncStorage() || refreshStorage()
+            confirm('Apply changes ?') && syncStorage() || refreshStorage()
         }
         [streamElm, document.body].forEach((elm) => elm.classList.toggle('rename'))
         ,[titleElm, urlElm].forEach((elm) => elm.contentEditable = !JSON.parse(elm.contentEditable))

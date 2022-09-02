@@ -6,6 +6,8 @@
   "scripts": {
     "build": "NODE_ENV=production npx esbuild src/index.js --bundle --minify --outfile=dist/main.js",
     "clean": "rm -f dist/main.*",
+    "eslint": "eslint src dist",
+    "eslint-fix": "eslint --fix src dist",
     "start": "npm run clean && npx esbuild src/index.js --bundle --servedir=dist --outfile=dist/main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -25,6 +27,9 @@
     "url": "https://github.com/boris-brtan/stream/issues"
   },
   "homepage": "https://github.com/boris-brtan/stream#readme",
-  "devDependencies": {},
+  "devDependencies": {
+    "esbuild": "^0.15.6",
+    "eslint": "^8.23.0"
+  },
   "dependencies": {}
 }
