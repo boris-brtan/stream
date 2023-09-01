@@ -1,7 +1,6 @@
 export const streamList = document.querySelector('ul')
 export const audioMetadata = navigator.mediaSession && (navigator.mediaSession.metadata = new MediaMetadata())
 
-export const isMenu = () => document.body.classList.contains('menu')
 export const isEdit = () => document.body.classList.contains('edit')
 export const isRename = () => document.body.classList.contains('rename')
 export const isSelected = () => document.body.classList.contains('selected')
@@ -18,6 +17,7 @@ export const syncStorage = () => {
         })),
     })
 }
+
 export const refreshStorage = () => {
     streamList.innerHTML = ''
     localStorage.stream && JSON.parse(localStorage.stream).items?.forEach((item) => createStreamElement(item, streamList))
@@ -25,9 +25,7 @@ export const refreshStorage = () => {
 
 export const createElement = (tag, options = {}, appendToElement = null) => {
     const element = document.createElement(tag)
-    Object.entries(options).forEach(([key, value]) => {
-        element[key] = value
-    })
+    Object.entries(options).forEach(([key, value]) => { element[key] = value })
     if (appendToElement) {
         return appendToElement.appendChild(element)
     }
@@ -38,14 +36,12 @@ let selectedStream = null
 const audioElm = document.querySelector('audio')
 export const createStreamElement = (item, appendToElement = null) => {
     const streamElm = createElement('li')
-    const titleElm = createElement('span', {
+    const titleElm = createElement('span', { 
         textContent: item.title,
         contentEditable: false,
+        tabIndex: 0,
     }, streamElm)
-    const urlElm = createElement('span', {
-        textContent: item.url,
-        contentEditable: false,
-    }, streamElm)
+    const urlElm = createElement('span', { textContent: item.url, contentEditable: false }, streamElm)
     const renameButton = createElement('button', { className: 'rename' }, streamElm)
     const removeButton = createElement('button', { className: 'remove' }, streamElm)
     renameButton.addEventListener('click', (evt) => {
@@ -81,9 +77,14 @@ export const createStreamElement = (item, appendToElement = null) => {
             return
         }
         audioElm.src = item.url
-        audioElm.play().catch((e) => e)
+        audioElm.play().catch((e) => console.error(e))
         setActive(streamElm)
         audioMetadata && (audioMetadata.title = item.title.match(/[^/]+$/))
+    })
+    streamElm.addEventListener('keydown', ({ key }) => {
+        if ([' ', 'Enter'].includes(key)) {
+            streamElm.click()
+        }
     })
     if(appendToElement) {
         return appendToElement.appendChild(streamElm)

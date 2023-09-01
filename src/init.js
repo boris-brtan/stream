@@ -1,4 +1,4 @@
-import { active, audioMetadata, createStreamElement, isMenu, streamList, syncStorage, refreshStorage } from './helper'
+import { active, audioMetadata, createStreamElement, streamList, syncStorage, refreshStorage } from './helper'
 import { migrate } from './migration'
 
 migrate()
@@ -28,24 +28,3 @@ document.querySelector('input').addEventListener('keyup', (evt) => {
         evt.target.value = ''
     }
 })
-
-function handleTouchStart(e) {
-    const startX = e.touches && e.touches[0].clientX || e.clientX
-
-    const handleSwipe = (evt) => {
-        const swipeLength = (evt.touches && evt.changedTouches[0].clientX || evt.clientX) - startX
-        if (!isMenu() && swipeLength > 150) {
-            document.body.classList.add('menu')
-        } else if (isMenu() && swipeLength < -150) {
-            document.body.classList.remove('menu')
-        }
-        e.target.removeEventListener('touchend', handleSwipe)
-        e.target.removeEventListener('mouseup', handleSwipe)
-    }
-    if ((!isMenu() && startX < 50) || (isMenu() && startX < 300)) {
-        e.target.addEventListener('touchend', handleSwipe)
-        e.target.addEventListener('mouseup', handleSwipe)
-    }
-}
-document.body.ontouchstart = handleTouchStart
-document.body.onmousedown = handleTouchStart

@@ -1,15 +1,16 @@
 * {
     padding: 0;
     margin: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
     box-sizing: border-box;
+    color: unset;
 }
 
-button {
-    background: 0;
-    border: 0;
-    color: unset;
-    outline: 0;
-    cursor: pointer;
+*:focus {
+    outline: 1px solid rgba(255,255,255,0.8);
+    outline-offset: 3px;
 }
 
 html,
@@ -24,19 +25,20 @@ body {
     font-family: sans-serif;
 }
 
+button {
+    cursor: pointer;
+}
+
 label {
     min-width: 300px;
 }
 
 label input {
-    outline: none;
-    background: transparent;
     font-size: .9rem;
 }
 
 label input[type=text],
 label input[type=url] {
-    border: none;
     border-bottom: 1px dotted #ffffff;
     width: 100%;
     max-width: 40ex;
@@ -84,47 +86,27 @@ button.rename {
     background: rgba(255, 255, 0, .66);
     top: 0;
 }
+
 body.rename li.rename button.rename {
     background: rgba(0, 255, 0, .66);
 }
-
 
 body > section {
     display: flex;
     flex-direction: column;
 }
 
-section.menu {
-    flex: 0;
-    position: fixed;
-    max-width: 0;
-    overflow: hidden;
-    transition: max-width .25s linear;
-}
-
-.menu section.menu {
-    max-width: 50px;
-} 
-
-section.menu button.edit {
-    width: 35px;
-    height: 35px;
-    padding: 6px;
-}
-
-section.menu button.edit:after {
-    content: "";
-    display: block;
-    height: 100%;
-    width: 50%;
-    background: linear-gradient(0deg, transparent 50%, #fff 50%);
+body button.edit {
+    width: 40px;
+    height: 20px;
     border: 1px solid #fff;
-    border-radius: 3px;
-    transform: rotate(-45deg) translate(3px, 4px);
+    background: linear-gradient(90deg, #fff 50%, transparent 50%);
+    float: right;
+    margin-bottom: 6px;
 }
 
-body.edit .menu button.edit:after {
-    background: linear-gradient(0deg, #fff 50%, transparent 50%);
+body.edit button.edit {
+    background: linear-gradient(90deg, transparent 50%, #fff 50%);
 }
 
 body.edit ul li span:nth-child(n+2),
@@ -152,6 +134,7 @@ section.content {
         cursor: pointer;
     }
 }
+
 body.edit.selected ul li {
     margin-top: 15px;
 }
